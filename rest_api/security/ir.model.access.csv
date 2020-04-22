@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rest_cr,access_rest_cr,model_rest_cr,base.group_user,1,0,0,0
+access_refresh_token,access_refresh_token,model_refresh_token,base.group_user,1,0,0,0
