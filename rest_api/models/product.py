@@ -9,10 +9,8 @@ class Product(models.Model):
         read_list = [
             'write_date',
             'name',
-            'street',
-            'street2',
-            'city',
-            'phone',
+            'type',
+            'default_code'
         ]
         if product_id:
             product_ids = self.browse(product_id)
