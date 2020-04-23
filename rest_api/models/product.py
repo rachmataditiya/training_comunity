@@ -40,3 +40,24 @@ class ProductCategory(models.Model):
         category_ids = self.search(search_list)
         result = category_ids.read(read_list, load=False)
         return result
+
+    def api_post_category(self, body, **kwargs):
+        new_category = body.get('data', False)
+        uid = kwargs.get('uid',1)
+        if new_category:
+            try:
+                category_id = self.with_user(uid).create(new_category)
+            except Exception:
+                return {"error":{"code": 400,"message":"gagal membuat kategori"}}
+        return {"category_id":category_id.id}
+
+    def api_edit_category(self, category_id, body, **kwargs):
+        vals = body.get('data', False)
+        uid = kwargs.get('uid',1)
+        if vals:
+            try:
+                category_id = self.with_user(uid).browse(category_id)
+                category_id.with_user(uid).write(vals[0])
+            except Exception:
+                return {"error":{"code": 400,"message":"gagal mengedit kategori"}}
+        return {"result": "sukses", "category_id": category_id.id}
