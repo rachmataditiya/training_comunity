@@ -21,3 +21,22 @@ class Product(models.Model):
         product_ids = self.search(search_list)
         result = product_ids.read(read_list, load=False)
         return result
+
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
+
+    def api_get_category(self, category_id=False):
+        read_list = [
+            'write_date',
+            'id',
+            'name',
+            'parent_id'
+        ]
+        if category_id:
+            category_ids = self.browse(category_id)
+            result = category_ids.read(read_list, load=False)
+            return result, len(category_ids.exists())
+        search_list = []
+        category_ids = self.search(search_list)
+        result = category_ids.read(read_list, load=False)
+        return result
