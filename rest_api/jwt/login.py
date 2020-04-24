@@ -2,6 +2,7 @@ import json
 
 from odoo import http, _
 from odoo.http import request, route
+from odoo.tools.config import config
 
 import werkzeug
 import jwt
@@ -11,7 +12,8 @@ import json
 import functools
 
 
-secret_key = 'arkana'
+secret_key = config.options.get('jwt_secret_key', 'Ark@na2019')
+
 def _response(headers, body, status=200, request_type='http'):
     if request_type == 'json':
         response = {}
