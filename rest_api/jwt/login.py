@@ -51,8 +51,10 @@ def token_required(**kw):
             try:
                 data = jwt.decode(token, secret_key)
                 kw['uid'] = data['uid']
-            except:
-                return {'error' : {'code': 401, 'message': 'Token is invalid'}}
+            except jwt.ExpiredSignature:
+                return {'error' : {'code': 401, 'message': 'Token is expired'}}
+            except jwt.DecodeError:
+                return {'error' : {'code': 401, 'message': 'Token signature is invalid'}}
             response = f(*args, **kw)
             return response
         return wrapper
